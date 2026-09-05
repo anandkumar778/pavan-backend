@@ -1,0 +1,579 @@
+{
+	"info": {
+		"_postman_id": "pavna-school-api-collection",
+		"name": "Pavna School Backend API",
+		"description": "Complete Postman collection for testing Pavna School REST API endpoints.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Super Admin\",\n  \"email\": \"admin@pavnaschool.com\",\n  \"password\": \"admin123456\",\n  \"role\": \"superadmin\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@pavnaschool.com\",\n  \"password\": \"admin123456\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "profile"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin Management",
+			"item": [
+				{
+					"name": "Get All Admins",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin"]
+						}
+					}
+				},
+				{
+					"name": "Update Admin Status / Role",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isActive\": true,\n  \"role\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admin/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", ":id"],
+							"variable": [{ "key": "id", "value": "ADMIN_ID_HERE" }]
+						}
+					}
+				},
+				{
+					"name": "Delete Admin",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", ":id"],
+							"variable": [{ "key": "id", "value": "ADMIN_ID_HERE" }]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admissions",
+			"item": [
+				{
+					"name": "Submit Admission Application",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"studentName\": \"Rahul Sharma\",\n  \"dob\": \"2015-08-15\",\n  \"gender\": \"Male\",\n  \"gradeApplying\": \"Class 5\",\n  \"parentName\": \"Vikram Sharma\",\n  \"email\": \"parent@example.com\",\n  \"phone\": \"9876543210\",\n  \"address\": {\n    \"street\": \"123 School Road\",\n    \"city\": \"Aligarh\",\n    \"state\": \"UP\",\n    \"pincode\": \"202001\"\n  },\n  \"previousSchool\": \"ABC Academy\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admissions",
+							"host": ["{{baseUrl}}"],
+							"path": ["admissions"]
+						}
+					}
+				},
+				{
+					"name": "Get All Admissions (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admissions",
+							"host": ["{{baseUrl}}"],
+							"path": ["admissions"]
+						}
+					}
+				},
+				{
+					"name": "Get Admission By ID (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admissions/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["admissions", ":id"],
+							"variable": [{ "key": "id", "value": "ADMISSION_ID_HERE" }]
+						}
+					}
+				},
+				{
+					"name": "Update Admission Status (Admin)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"Accepted\",\n  \"notes\": \"Verified documents. Application approved.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/admissions/:id/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["admissions", ":id", "status"],
+							"variable": [{ "key": "id", "value": "ADMISSION_ID_HERE" }]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Contacts",
+			"item": [
+				{
+					"name": "Submit Contact Us Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Amit Kumar\",\n  \"email\": \"amit@example.com\",\n  \"phone\": \"9876500000\",\n  \"subject\": \"School Bus Routes Query\",\n  \"message\": \"Can you please provide details about bus pickup points?\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contacts",
+							"host": ["{{baseUrl}}"],
+							"path": ["contacts"]
+						}
+					}
+				},
+				{
+					"name": "Get All Contact Inquiries (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/contacts",
+							"host": ["{{baseUrl}}"],
+							"path": ["contacts"]
+						}
+					}
+				},
+				{
+					"name": "Update Contact Status (Admin)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"status\": \"Replied\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contacts/:id/status",
+							"host": ["{{baseUrl}}"],
+							"path": ["contacts", ":id", "status"],
+							"variable": [{ "key": "id", "value": "CONTACT_ID_HERE" }]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Inquiries",
+			"item": [
+				{
+					"name": "Submit General School Inquiry",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"parentName\": \"Pooja Verma\",\n  \"studentName\": \"Siddharth Verma\",\n  \"email\": \"pooja@example.com\",\n  \"phone\": \"9123456789\",\n  \"gradeInterested\": \"Class 1\",\n  \"message\": \"Interested in fee structure and curriculum details.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/inquiries",
+							"host": ["{{baseUrl}}"],
+							"path": ["inquiries"]
+						}
+					}
+				},
+				{
+					"name": "Get All Inquiries (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/inquiries",
+							"host": ["{{baseUrl}}"],
+							"path": ["inquiries"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Notices",
+			"item": [
+				{
+					"name": "Get Active Notices (Public)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/notices/active",
+							"host": ["{{baseUrl}}"],
+							"path": ["notices", "active"]
+						}
+					}
+				},
+				{
+					"name": "Create Notice (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Annual Sports Day 2026\",\n  \"content\": \"Sports day will be celebrated on October 15th.\",\n  \"targetAudience\": \"All\",\n  \"isImportant\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/notices",
+							"host": ["{{baseUrl}}"],
+							"path": ["notices"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get Active Events (Public)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/events/active",
+							"host": ["{{baseUrl}}"],
+							"path": ["events", "active"]
+						}
+					}
+				},
+				{
+					"name": "Create Event (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Science Exhibition 2026\",\n  \"description\": \"Inter-school science competition for Grade 6-12.\",\n  \"eventDate\": \"2026-11-20\",\n  \"time\": \"10:00 AM\",\n  \"location\": \"Main Auditorium\",\n  \"category\": \"Academic\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/events",
+							"host": ["{{baseUrl}}"],
+							"path": ["events"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Gallery",
+			"item": [
+				{
+					"name": "Get Gallery Items (Public)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/gallery",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery"]
+						}
+					}
+				},
+				{
+					"name": "Add Gallery Item (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Campus Greenery\",\n  \"albumName\": \"Campus Tour\",\n  \"mediaUrl\": \"https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3\",\n  \"mediaType\": \"image\",\n  \"category\": \"Campus\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/gallery",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Faculty",
+			"item": [
+				{
+					"name": "Get Faculty List (Public)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/faculty",
+							"host": ["{{baseUrl}}"],
+							"path": ["faculty"]
+						}
+					}
+				},
+				{
+					"name": "Add Faculty Member (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Dr. R. K. Gupta\",\n  \"designation\": \"Principal\",\n  \"department\": \"Administration\",\n  \"qualification\": \"Ph.D. in Education\",\n  \"bio\": \"Over 20 years of academic leadership experience.\",\n  \"email\": \"principal@pavnaschool.com\",\n  \"displayOrder\": 1\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/faculty",
+							"host": ["{{baseUrl}}"],
+							"path": ["faculty"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Testimonials",
+			"item": [
+				{
+					"name": "Get Testimonials (Public)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/testimonials",
+							"host": ["{{baseUrl}}"],
+							"path": ["testimonials"]
+						}
+					}
+				},
+				{
+					"name": "Add Testimonial (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sunita Agarwal\",\n  \"relation\": \"Parent\",\n  \"quote\": \"Excellent holistic development environment for kids.\",\n  \"rating\": 5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/testimonials",
+							"host": ["{{baseUrl}}"],
+							"path": ["testimonials"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Achievements",
+			"item": [
+				{
+					"name": "Get Achievements (Public)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/achievements",
+							"host": ["{{baseUrl}}"],
+							"path": ["achievements"]
+						}
+					}
+				},
+				{
+					"name": "Add Achievement (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"1st Rank in State Math Olympiad\",\n  \"description\": \"Secured Gold medal among 500 participating schools.\",\n  \"category\": \"Academic\",\n  \"achievementDate\": \"2026-02-10\",\n  \"studentName\": \"Aarav Mehta\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/achievements",
+							"host": ["{{baseUrl}}"],
+							"path": ["achievements"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Facilities",
+			"item": [
+				{
+					"name": "Get Facilities (Public)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/facilities",
+							"host": ["{{baseUrl}}"],
+							"path": ["facilities"]
+						}
+					}
+				},
+				{
+					"name": "Add Facility (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Robotics & AI Lab\",\n  \"description\": \"State-of-the-art robotics laboratory for hands-on STEM learning.\",\n  \"category\": \"Academic Infrastructure\",\n  \"icon\": \"cpu\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/facilities",
+							"host": ["{{baseUrl}}"],
+							"path": ["facilities"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Pages (CMS)",
+			"item": [
+				{
+					"name": "Get Page By Slug (Public)",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{baseUrl}}/pages/:slug",
+							"host": ["{{baseUrl}}"],
+							"path": ["pages", ":slug"],
+							"variable": [{ "key": "slug", "value": "about-us" }]
+						}
+					}
+				},
+				{
+					"name": "Create or Update Page (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" },
+							{ "key": "Authorization", "value": "Bearer {{token}}" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"About Pavna School\",\n  \"content\": \"<h1>Welcome to Pavna School</h1><p>Inspiring excellence since 1995.</p>\",\n  \"metaTitle\": \"About Us - Pavna School\",\n  \"metaDescription\": \"Learn about our values and legacy.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pages/:slug",
+							"host": ["{{baseUrl}}"],
+							"path": ["pages", ":slug"],
+							"variable": [{ "key": "slug", "value": "about-us" }]
+						}
+					}
+				}
+			]
+		}
+	]
+}
