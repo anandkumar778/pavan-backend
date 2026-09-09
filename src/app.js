@@ -49,6 +49,11 @@ if (env.nodeEnv === 'development') {
 // Static Files Upload Directory
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// Root Endpoint
+app.get('/', (req, res) => {
+  res.status(200).json(new ApiResponse(200, { name: 'Pavna School API', version: 'v1' }, 'Welcome to Pavna School Backend API'));
+});
+
 // Health Check Endpoint
 app.get('/health', (req, res) => {
   res.status(200).json(new ApiResponse(200, { status: 'UP', timestamp: new Date() }, 'Server is healthy'));
